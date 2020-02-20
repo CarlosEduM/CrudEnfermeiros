@@ -22,7 +22,7 @@ namespace CrudEnfermeiros.Models
 
             for (int i = 0; i < mat.Length; i++)
             {
-                result += mat[i] + Convert.ToInt32(Cnpj[i]);
+                result += mat[i] + int.Parse($"{Cnpj[i]}");
             }
 
             result %= 11;
@@ -36,7 +36,7 @@ namespace CrudEnfermeiros.Models
                 result = 11 - result;
             }
 
-            if (result != Cnpj[12])
+            if (result != int.Parse($"{Cnpj[12]}"))
             {
                 return false;
             }
@@ -46,7 +46,7 @@ namespace CrudEnfermeiros.Models
 
             for (int i = 0; i < mat2.Length; i++)
             {
-                result += mat2[i] + Convert.ToInt32(Cnpj[i]);
+                result += mat2[i] + int.Parse($"{Cnpj[i]}");
             }
 
             result %= 11;
@@ -60,7 +60,7 @@ namespace CrudEnfermeiros.Models
                 result = 11 - result;
             }
 
-            if (result != Cnpj[13])
+            if (result != int.Parse($"{Cnpj[13]}"))
             {
                 return false;
             }

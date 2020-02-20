@@ -14,7 +14,7 @@ namespace CrudEnfermeiros.Models
         public DateTime DataDeNasciento { get; set; }
         public Hospital Hospital { get; set; }
 
-        public bool validarCpf()
+        public bool ValidarCpf()
         {
             int[] mat = { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
             int[] mat2 = { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
@@ -25,7 +25,7 @@ namespace CrudEnfermeiros.Models
 
             for(int i = 0; i < mat.Length; i++)
             {
-                result += mat[i] + Convert.ToInt32(Cpf[i]);
+                result += mat[i] + int.Parse($"{Cpf[i]}");
             }
 
             result %= 11;
@@ -39,7 +39,7 @@ namespace CrudEnfermeiros.Models
                 result = 11 - result;
             }
 
-            if(result != Cpf[9])
+            if(result != int.Parse($"{Cpf[9]}"))
             {
                 return false;
             }
@@ -49,7 +49,7 @@ namespace CrudEnfermeiros.Models
 
             for (int i = 0; i < mat2.Length; i++)
             {
-                result += mat2[i] + Convert.ToInt32(Cpf[i]);
+                result += mat2[i] + int.Parse($"{Cpf[i]}");
             }
 
             result %= 11;
@@ -63,7 +63,7 @@ namespace CrudEnfermeiros.Models
                 result = 11 - result;
             }
 
-            if (result != Cpf[10])
+            if (result != int.Parse($"{Cpf[10]}"))
             {
                 return false;
             }

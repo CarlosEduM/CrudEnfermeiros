@@ -9,7 +9,7 @@ namespace CrudEnfermeiros.Data
         {
         }
 
-        DbSet<Hospital> Hospitals { get; set; }
-        DbSet<Enfermeiro> Enfermeiros { get; set; }
+        public DbSet<Hospital> Hospitals { get; set; }
+        public DbSet<Enfermeiro> Enfermeiros { get; set; }
     }
 }
