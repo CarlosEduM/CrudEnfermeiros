@@ -25,14 +25,14 @@ namespace CrudEnfermeiros.Services
 
         public async Task<Enfermeiro> FindByIdAsync(int id)
         {
-            return await _context.Enfermeiros.Include(x => x.Id == id).FirstOrDefaultAsync();
+            return await _context.Enfermeiros.Include(x => x.Hospital).FirstOrDefaultAsync(obj => obj.Id == id);
         }
 
         public async Task InsertAsync(Enfermeiro obj)
         {
             if (!obj.ValidarCpf())
             {
-                throw new ExcecaoDeIntegridade("CPF invalido");
+                throw new ExcecaoDeIntegridade("CPF inválido");
             }
 
             _context.Add(obj);
@@ -43,11 +43,10 @@ namespace CrudEnfermeiros.Services
         {
             if (obj.ValidarCpf())
             {
-                throw new ExcecaoDeIntegridade("CpfInvalido");
+                throw new ExcecaoDeIntegridade("CPF inválido");
             }
 
-            bool verificar = await _context.Enfermeiros.AnyAsync(x => x.Id == obj.Id);
-            if (!verificar)
+            if (!(await _context.Enfermeiros.AnyAsync(x => x.Id == obj.Id)))
             {
                 throw new ExcecaoNaoEncontrado("Id não encontrado");
             }
