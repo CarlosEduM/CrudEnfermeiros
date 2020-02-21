@@ -23,12 +23,12 @@ namespace CrudEnfermeiros.Services
             return await _context.Hospitais.ToListAsync();
         }
 
-        public async Task<Hospital> FindByIdasync(int id)
+        public async Task<Hospital> FindByIdAsync(int id)
         {
             return await _context.Hospitais.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task Insert(Hospital obj)
+        public async Task InsertAsync(Hospital obj)
         {
             if (!obj.validarCnpj())
             {
@@ -39,7 +39,7 @@ namespace CrudEnfermeiros.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update(Hospital obj)
+        public async Task UpdateAsync(Hospital obj)
         {
             if (!obj.validarCnpj())
             {
@@ -62,7 +62,7 @@ namespace CrudEnfermeiros.Services
             }
         }
 
-        public async Task Remove(int id)
+        public async Task RemoveAsync(int id)
         {
             try
             {

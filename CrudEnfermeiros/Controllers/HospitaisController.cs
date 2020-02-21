@@ -38,7 +38,7 @@ namespace CrudEnfermeiros.Controllers
                 return View(hospital);
             }
 
-            await _hospitalService.Insert(hospital);
+            await _hospitalService.InsertAsync(hospital);
             return RedirectToAction(nameof(Index));
         }
 
@@ -49,13 +49,54 @@ namespace CrudEnfermeiros.Controllers
                 return NotFound();
             }
 
-            var obj = await _hospitalService.FindByIdasync(id.Value);
+            var obj = await _hospitalService.FindByIdAsync(id.Value);
             if(obj == null)
             {
                 return NotFound();
             }
 
             return View(obj);
+        }
+
+        public async Task<IActionResult> Editar(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = await _hospitalService.FindByIdAsync(id.Value);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Editar(int id, Hospital obj)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(obj);
+            }
+
+            if(id != obj.Id)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _hospitalService.UpdateAsync(obj);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (ApplicationException)
+            {
+                return BadRequest();
+            }
         }
     }
 }
