@@ -98,5 +98,36 @@ namespace CrudEnfermeiros.Controllers
                 return BadRequest();
             }
         }
+
+        public async Task<IActionResult> Deletar(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = await _hospitalService.FindByIdAsync(id.Value);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Deletar(int id)
+        {
+            try
+            {
+                await _hospitalService.RemoveAsync(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (ApplicationException)
+            {
+                return NotFound();
+            }
+        }
     }
 }
