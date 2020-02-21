@@ -38,21 +38,28 @@ namespace CrudEnfermeiros.Controllers
                 return View(hospital);
             }
 
-            await _hospitalService.InsertAsync(hospital);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _hospitalService.InsertAsync(hospital);
+                return RedirectToAction(nameof(Index));
+            }
+            catch(ApplicationException e)
+            {
+                return RedirectToAction(nameof(Error), new { messagem = e.Message });
+            }
         }
 
         public async Task<IActionResult> Detalhes(int? id)
         {
             if(id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { messagem = "Id não informado" });
             }
 
             var obj = await _hospitalService.FindByIdAsync(id.Value);
             if(obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { messagem = "Id não encontrado" });
             }
 
             return View(obj);
@@ -62,13 +69,13 @@ namespace CrudEnfermeiros.Controllers
         {
             if(id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { messagem = "Id não informado" }); ;
             }
 
             var obj = await _hospitalService.FindByIdAsync(id.Value);
             if(obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { messagem = "Id não encontrado" }); ;
             }
 
             return View(obj);
@@ -85,7 +92,7 @@ namespace CrudEnfermeiros.Controllers
 
             if(id != obj.Id)
             {
-                return BadRequest();
+                return RedirectToAction(nameof(Error), new { messagem = "Incompatibilidade de id" }); ;
             }
 
             try
@@ -93,9 +100,9 @@ namespace CrudEnfermeiros.Controllers
                 await _hospitalService.UpdateAsync(obj);
                 return RedirectToAction(nameof(Index));
             }
-            catch (ApplicationException)
+            catch (ApplicationException e)
             {
-                return BadRequest();
+                return RedirectToAction(nameof(Error), new { messagem = e.Message }); ;
             }
         }
 
@@ -103,13 +110,13 @@ namespace CrudEnfermeiros.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { messagem = "Id não informado" }); ;
             }
 
             var obj = await _hospitalService.FindByIdAsync(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { messagem = "Id não encontrado" }); ;
             }
 
             return View(obj);
@@ -124,10 +131,21 @@ namespace CrudEnfermeiros.Controllers
                 await _hospitalService.RemoveAsync(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch (ApplicationException)
+            catch (ApplicationException e)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { messagem = e.Message }); ;
             }
+        }
+
+        public IActionResult Error(string messagem)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = messagem,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+
+            return View(viewModel);
         }
     }
 }
