@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace CrudEnfermeiros.Services
 {
-    public class EnfermeirosService
+    public class EnfermeiroService
     {
         public CrudEnfermeirosContext _context { get; }
 
-        public EnfermeirosService(CrudEnfermeirosContext context)
+        public EnfermeiroService(CrudEnfermeirosContext context)
         {
             _context = context;
         }

@@ -9,11 +9,11 @@ using CrudEnfermeiros.Services.Exceptions;
 
 namespace CrudEnfermeiros.Services
 {
-    public class HospitaisService
+    public class HospitalService
     {
         public CrudEnfermeirosContext _context { get; }
 
-        public HospitaisService(CrudEnfermeirosContext context)
+        public HospitalService(CrudEnfermeirosContext context)
         {
             _context = context;
         }

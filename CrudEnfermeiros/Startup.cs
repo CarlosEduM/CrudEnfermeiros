@@ -31,7 +31,8 @@ namespace CrudEnfermeiros
             services.AddDbContext<CrudEnfermeirosContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("CrudEnfermeirosContext")));
 
-            services.AddScoped<EnfermeirosService>();
+            services.AddScoped<EnfermeiroService>();
+            services.AddScoped<HospitalService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
