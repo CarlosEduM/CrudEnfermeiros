@@ -14,14 +14,16 @@ namespace CrudEnfermeiros.Models
         [StringLength(60, MinimumLength = 10, ErrorMessage = "{0} deve ter o tamanho entre {2} e {1}")]
         public string Nome { get; set; }
 
+        [Display(Name = "Endereço")]
         [Required(ErrorMessage = "{0} é obrigatorio")]
         [StringLength(60, MinimumLength = 10, ErrorMessage = "{0} deve ter o tamanho entre {2} e {1}")]
         public string Endereco { get; set; }
 
+
+        [Display(Name = "CNPJ")]
         [Required(ErrorMessage = "{0} é obrigatorio")]
-        [StringLength(14, MinimumLength = 14, ErrorMessage = "{0} deve ter {1} numeros")]
-        [Display(Name ="CNPJ")]
         [RegularExpression(@"^[0-9]*$")]
+        [StringLength(14, MinimumLength = 14, ErrorMessage = "{0} deve ter {1} numeros")]
         public string Cnpj { get; set; }
 
         public bool validarCnpj()

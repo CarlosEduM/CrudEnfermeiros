@@ -41,5 +41,21 @@ namespace CrudEnfermeiros.Controllers
             await _hospitalService.Insert(hospital);
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> Detalhes(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = await _hospitalService.FindByIdasync(id.Value);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
     }
 }
