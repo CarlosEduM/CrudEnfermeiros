@@ -25,7 +25,7 @@ namespace CrudEnfermeiros.Models
 
             for(int i = 0; i < mat.Length; i++)
             {
-                result += mat[i] + int.Parse($"{Cpf[i]}");
+                result += mat[i] * int.Parse($"{Cpf[i]}");
             }
 
             result %= 11;
@@ -49,7 +49,7 @@ namespace CrudEnfermeiros.Models
 
             for (int i = 0; i < mat2.Length; i++)
             {
-                result += mat2[i] + int.Parse($"{Cpf[i]}");
+                result += mat2[i] * int.Parse($"{Cpf[i]}");
             }
 
             result %= 11;

@@ -23,5 +23,23 @@ namespace CrudEnfermeiros.Controllers
         {
             return View(await _hospitalService.FindAllAsync());
         }
+
+        public IActionResult Cadastrar()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Cadastrar(Hospital hospital)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(hospital);
+            }
+
+            await _hospitalService.Insert(hospital);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
