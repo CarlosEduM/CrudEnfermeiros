@@ -38,7 +38,7 @@ namespace CrudEnfermeiros.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(obj);
             }
 
             try
@@ -47,6 +47,55 @@ namespace CrudEnfermeiros.Controllers
                 return RedirectToAction(nameof(Index));
             }
             catch (ApplicationException e)
+            {
+                return RedirectToAction(nameof(Error), new { messagem = e.Message });
+            }
+        }
+
+        public async Task<IActionResult> Detalhes(int? id)
+        {
+            if(id == null)
+            {
+                return RedirectToAction(nameof(Error), new { messagem = "Id não informado" });
+            }
+
+            var obj = await _enfermeiroService.FindByIdAsync(id.Value);
+
+            if(obj == null)
+            {
+                return RedirectToAction(nameof(Error), new { messagem = "Id não encontrado" });
+            }
+
+            return View(obj);
+        }
+
+        public async Task<IActionResult> Deletar(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Error), new { messagem = "Id não informado" });
+            }
+
+            var obj = await _enfermeiroService.FindByIdAsync(id.Value);
+
+            if (obj == null)
+            {
+                return RedirectToAction(nameof(Error), new { messagem = "Id não encontrado" });
+            }
+
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Deletar(int id)
+        {
+            try
+            {
+                await _enfermeiroService.RemoveAsync(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch(ApplicationException e)
             {
                 return RedirectToAction(nameof(Error), new { messagem = e.Message });
             }
