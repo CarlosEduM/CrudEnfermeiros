@@ -18,7 +18,7 @@ namespace CrudEnfermeiros.Models
         [Display(Name = "CPF")]
         [Required(ErrorMessage = "{0} é obrigatorio")]
         [StringLength(11, MinimumLength = 11, ErrorMessage = "{0} deve ter {1} numeros")]
-        [RegularExpression(@"^[1-9]*$")]
+        [RegularExpression(@"^[0-9]*$", ErrorMessage = "{0} deve conter apenas numeros")]
         public string Cpf { get; set; }
 
         [Required(ErrorMessage = "{0} é obrigatorio")]
@@ -29,6 +29,7 @@ namespace CrudEnfermeiros.Models
         [DataType(DataType.Date)]
         public DateTime DataDeNasciento { get; set; }
         public Hospital Hospital { get; set; }
+        public int HospitalId { get; set; }
 
         public bool ValidarCpf()
         {

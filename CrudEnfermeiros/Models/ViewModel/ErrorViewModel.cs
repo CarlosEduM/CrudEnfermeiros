@@ -1,6 +1,6 @@
 using System;
 
-namespace CrudEnfermeiros.Models.ViewModel
+namespace CrudEnfermeiros.Models
 {
     public class ErrorViewModel
     {

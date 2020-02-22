@@ -20,7 +20,7 @@ namespace CrudEnfermeiros.Services
 
         public async Task<List<Enfermeiro>> FindAllAsync()
         {
-            return await _context.Enfermeiros.ToListAsync();
+            return await _context.Enfermeiros.Include(x => x.Hospital).ToListAsync();
         }
 
         public async Task<Enfermeiro> FindByIdAsync(int id)
@@ -34,6 +34,8 @@ namespace CrudEnfermeiros.Services
             {
                 throw new ExcecaoDeIntegridade("CPF inválido");
             }
+
+            obj.Hospital = _context.Hospitais.First();
 
             _context.Add(obj);
             await _context.SaveChangesAsync();

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using CrudEnfermeiros.Models;
+using CrudEnfermeiros.Models.ViewModel;
 using CrudEnfermeiros.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +25,42 @@ namespace CrudEnfermeiros.Controllers
         {
             var obj = await _enfermeiroService.FindAllAsync();
             return View(obj);
+        }
+
+        public IActionResult Cadastrar()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Cadastrar(Enfermeiro obj)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            try
+            {
+                await _enfermeiroService.InsertAsync(obj);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (ApplicationException e)
+            {
+                return RedirectToAction(nameof(Error), new { messagem = e.Message });
+            }
+        }
+
+        public IActionResult Error(string messagem)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Message = messagem,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+
+            return View(viewModel);
         }
     }
 }

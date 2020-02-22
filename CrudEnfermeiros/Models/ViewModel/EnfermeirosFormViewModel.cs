@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CrudEnfermeiros.Models.ViewModel
 {
     public class EnfermeirosFormViewModel
     {
-        public Enfermeiro enfermeiro { get; set; }
-        public List<Hospital> hospitais { get; set; }
+        public Enfermeiro Enfermeiro { get; set; }
+        public ICollection<Hospital> Hospitais { get; set; }
     }
 }
