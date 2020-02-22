@@ -28,7 +28,7 @@ namespace CrudEnfermeiros.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NameCompleto = table.Column<string>(nullable: true),
+                    NomeCompleto = table.Column<string>(nullable: true),
                     Cpf = table.Column<string>(nullable: true),
                     Coren = table.Column<string>(nullable: true),
                     DataDeNasciento = table.Column<DateTime>(nullable: false),

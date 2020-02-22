@@ -22,7 +22,7 @@ namespace CrudEnfermeiros.Models
 
         [Display(Name = "CNPJ")]
         [Required(ErrorMessage = "{0} é obrigatorio")]
-        [RegularExpression(@"^[0-9]*$")]
+        [RegularExpression(@"^[0-9]*$", ErrorMessage = "{0} deve conter somente números")]
         [StringLength(14, MinimumLength = 14, ErrorMessage = "{0} deve ter {1} numeros")]
         public string Cnpj { get; set; }
 

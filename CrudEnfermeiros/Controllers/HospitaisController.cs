@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using CrudEnfermeiros.Models;
+using CrudEnfermeiros.Models.ViewModel;
 using CrudEnfermeiros.Services;
 using CrudEnfermeiros.Services.Exceptions;
 using Microsoft.AspNetCore.Mvc;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,9 +9,24 @@ namespace CrudEnfermeiros.Models
     public class Enfermeiro
     {
         public int Id { get; set; }
-        public string NameCompleto { get; set; }
+
+        [Display(Name = "Nome Completo")]
+        [Required(ErrorMessage ="{0} é obrigatorio")]
+        [StringLength(60, MinimumLength = 10, ErrorMessage = "{0} deve ter entre {2} e {1}")]
+        public string NomeCompleto { get; set; }
+
+        [Display(Name = "CPF")]
+        [Required(ErrorMessage = "{0} é obrigatorio")]
+        [StringLength(11, MinimumLength = 11, ErrorMessage = "{0} deve ter {1} numeros")]
+        [RegularExpression(@"^[1-9]*$")]
         public string Cpf { get; set; }
+
+        [Required(ErrorMessage = "{0} é obrigatorio")]
+        [Display(Name = "COREN")]
         public string Coren { get; set; }
+
+        [Required(ErrorMessage = "{0} é obrigatorio")]
+        [DataType(DataType.Date)]
         public DateTime DataDeNasciento { get; set; }
         public Hospital Hospital { get; set; }
 
