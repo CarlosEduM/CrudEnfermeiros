@@ -27,14 +27,16 @@ namespace CrudEnfermeiros.Controllers
             return View(obj);
         }
 
-        public IActionResult Cadastrar()
+        public async Task<IActionResult> Cadastrar()
         {
-            return View();
+            List<Hospital> hospitais = await _hospitalService.FindAllAsync();
+            var formView = new EnfermeirosFormViewModel { Hospitais = hospitais };
+            return View(formView);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Cadastrar(Enfermeiro obj)
+        public async Task<IActionResult> Cadastrar(EnfermeirosFormViewModel obj)
         {
             if (!ModelState.IsValid)
             {
@@ -43,7 +45,7 @@ namespace CrudEnfermeiros.Controllers
 
             try
             {
-                await _enfermeiroService.InsertAsync(obj);
+                await _enfermeiroService.InsertAsync(obj.Enfermeiro);
                 return RedirectToAction(nameof(Index));
             }
             catch (ApplicationException e)
@@ -83,26 +85,28 @@ namespace CrudEnfermeiros.Controllers
                 return RedirectToAction(nameof(Error), new { messagem = "Id não encontrado" });
             }
 
-            return View(obj);
+            EnfermeirosFormViewModel viewModel = new EnfermeirosFormViewModel { Enfermeiro = obj, Hospitais = await _hospitalService.FindAllAsync() };
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Editar(int id, Enfermeiro obj)
+        public async Task<IActionResult> Editar(int id, EnfermeirosFormViewModel obj)
         {
             if (!ModelState.IsValid)
             {
                 return View(obj);
             }
 
-            if (id != obj.Id)
+            if (id != obj.Enfermeiro.Id)
             {
                 return RedirectToAction(nameof(Error), new { messagem = "Incompatibilidade de id" }); ;
             }
 
             try
             {
-                await _enfermeiroService.UpdateAsync(obj);
+                await _enfermeiroService.UpdateAsync(obj.Enfermeiro);
                 return RedirectToAction(nameof(Index));
             }
             catch (ApplicationException e)

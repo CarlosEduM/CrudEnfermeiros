@@ -35,7 +35,7 @@ namespace CrudEnfermeiros.Services
                 throw new ExcecaoDeIntegridade("CPF inválido");
             }
 
-            obj.Hospital = _context.Hospitais.First();
+            obj.Hospital = await _context.Hospitais.FirstOrDefaultAsync(hospital => hospital.Id == obj.HospitalId);
 
             _context.Add(obj);
             await _context.SaveChangesAsync();
@@ -53,7 +53,7 @@ namespace CrudEnfermeiros.Services
                 throw new ExcecaoNaoEncontrado("Id não encontrado");
             }
 
-            obj.Hospital = _context.Hospitais.First();
+            obj.Hospital = await _context.Hospitais.FirstOrDefaultAsync(hospital => hospital.Id == obj.HospitalId);
 
             try
             {

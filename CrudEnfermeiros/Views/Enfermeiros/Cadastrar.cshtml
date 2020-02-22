@@ -1,4 +1,4 @@
-﻿@model CrudEnfermeiros.Models.Enfermeiro
+﻿@model CrudEnfermeiros.Models.ViewModel.EnfermeirosFormViewModel
 
 @{
     ViewData["Title"] = "Cadastrar";
@@ -13,24 +13,28 @@
         <form asp-action="Cadastrar">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="NomeCompleto" class="control-label"></label>
-                <input asp-for="NomeCompleto" class="form-control" />
-                <span asp-validation-for="NomeCompleto" class="text-danger"></span>
+                <label asp-for="Enfermeiro.NomeCompleto" class="control-label"></label>
+                <input asp-for="Enfermeiro.NomeCompleto" class="form-control" />
+                <span asp-validation-for="Enfermeiro.NomeCompleto" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Cpf" class="control-label"></label>
-                <input asp-for="Cpf" class="form-control" />
-                <span asp-validation-for="Cpf" class="text-danger"></span>
+                <label asp-for="Enfermeiro.Cpf" class="control-label"></label>
+                <input asp-for="Enfermeiro.Cpf" class="form-control" />
+                <span asp-validation-for="Enfermeiro.Cpf" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Coren" class="control-label"></label>
-                <input asp-for="Coren" class="form-control" />
-                <span asp-validation-for="Coren" class="text-danger"></span>
+                <label asp-for="Enfermeiro.Coren" class="control-label"></label>
+                <input asp-for="Enfermeiro.Coren" class="form-control" />
+                <span asp-validation-for="Enfermeiro.Coren" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DataDeNasciento" class="control-label"></label>
-                <input asp-for="DataDeNasciento" class="form-control" />
-                <span asp-validation-for="DataDeNasciento" class="text-danger"></span>
+                <label asp-for="Enfermeiro.DataDeNasciento" class="control-label"></label>
+                <input asp-for="Enfermeiro.DataDeNasciento" class="form-control" />
+                <span asp-validation-for="Enfermeiro.DataDeNasciento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Enfermeiro.HospitalId" class="control-label"></label>
+                <select asp-for="Enfermeiro.HospitalId" asp-items="@(new SelectList(Model.Hospitais, "Id", "Nome"))" class="form-control"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
