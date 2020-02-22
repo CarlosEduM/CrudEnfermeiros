@@ -43,7 +43,7 @@ namespace CrudEnfermeiros.Services
 
         public async Task UpdateAsync(Enfermeiro obj)
         {
-            if (obj.ValidarCpf())
+            if (!obj.ValidarCpf())
             {
                 throw new ExcecaoDeIntegridade("CPF inválido");
             }
@@ -52,6 +52,8 @@ namespace CrudEnfermeiros.Services
             {
                 throw new ExcecaoNaoEncontrado("Id não encontrado");
             }
+
+            obj.Hospital = _context.Hospitais.First();
 
             try
             {

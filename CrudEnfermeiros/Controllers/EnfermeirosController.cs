@@ -69,6 +69,48 @@ namespace CrudEnfermeiros.Controllers
             return View(obj);
         }
 
+        public async Task<IActionResult> Editar(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Error), new { messagem = "Id não informado" });
+            }
+
+            var obj = await _enfermeiroService.FindByIdAsync(id.Value);
+
+            if (obj == null)
+            {
+                return RedirectToAction(nameof(Error), new { messagem = "Id não encontrado" });
+            }
+
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Editar(int id, Enfermeiro obj)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(obj);
+            }
+
+            if (id != obj.Id)
+            {
+                return RedirectToAction(nameof(Error), new { messagem = "Incompatibilidade de id" }); ;
+            }
+
+            try
+            {
+                await _enfermeiroService.UpdateAsync(obj);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (ApplicationException e)
+            {
+                return RedirectToAction(nameof(Error), new { messagem = e.Message }); ;
+            }
+        }
+
         public async Task<IActionResult> Deletar(int? id)
         {
             if (id == null)
